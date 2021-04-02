@@ -1,5 +1,5 @@
 import React from "react";
-import { FeactureWrap, FeactureImgWrap, FeactureImgs, Dots } from "./styles/feacture";
+import { FeactureWrap, FeactureImgWrap, FeactureImgs, Dots, MobileDots } from "./styles/feacture";
 import Slider from "react-slick";
 import { useRecoilValue } from "recoil";
 import { getSlideImgs } from "../../store/recoil";
@@ -16,12 +16,21 @@ Feactures.Slider = function FeactureSlider({ children, ...props }) {
   const isMobile = useMediaQuery({
     query: "(max-width: 767px)",
   });
-
   const setting = {
     customPaging: function (i) {
+      if (isMobile) {
+        return (
+          <MobileDots>
+            {i + 1}/{imgs.length}
+          </MobileDots>
+        );
+      }
       return <Dots key={i} />;
     },
-    dots: !isMobile,
+    beforeChange: (oldIndex, newIndex) => {
+      return <div>{newIndex}</div>;
+    },
+    dots: true,
     autoplay: true,
     infinite: true,
     speed: 1000,
