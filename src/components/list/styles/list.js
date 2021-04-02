@@ -23,6 +23,7 @@ export const Wrap = styled.div`
 `;
 
 export const ItemWrap = styled.div`
+  cursor: pointer;
   text-align: left;
 `;
 

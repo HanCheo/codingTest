@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { ListContainer, Header, Wrap, ItemWrap, ItemImg, ItemName, ItemCost } from "./styles/list";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { getListData, getCartDatas } from "../../store/recoil";
+import { addComma } from "../../store/commonFunction";
 import axios from "axios";
 
 export default function List({ children, ...props }) {
@@ -13,7 +14,7 @@ List.Header = function ListHeader({ children, ...props }) {
 };
 List.Wrap = function ListWrap({ children, ...props }) {
   const [listDatas, setListDatas] = useRecoilState(getListData);
-  const [activeIndex, setActiveIndex] = useState(0);
+
   const setCartItems = useSetRecoilState(getCartDatas);
   const page = useRef(0);
 
@@ -33,13 +34,8 @@ List.Wrap = function ListWrap({ children, ...props }) {
       handleScroll();
     }
   };
-  function addComma(num) {
-    var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ",");
-  }
   function addCart(i, e) {
     e.preventDefault();
-    setActiveIndex(i);
     setCartItems(listDatas[i]);
   }
 
@@ -56,7 +52,7 @@ List.Wrap = function ListWrap({ children, ...props }) {
     <Wrap>
       {listDatas.map((d, i) => {
         return (
-          <ItemWrap key={i} className={activeIndex === i ? "active" : ""} onClick={(e) => addCart(i, e)}>
+          <ItemWrap key={i} onClick={(e) => addCart(i, e)}>
             <ItemImg src={"https://image.wingeat.com/" + d.image} />
             <ItemName>{d.itemName}</ItemName>
             <ItemCost>{addComma(d.price)}원</ItemCost>
@@ -65,17 +61,4 @@ List.Wrap = function ListWrap({ children, ...props }) {
       })}
     </Wrap>
   );
-};
-
-List.ItemWrap = function ListItemWrap({ children, ...props }) {
-  return <ItemWrap {...props}>{children}</ItemWrap>;
-};
-List.ItemImg = function ListItemImg({ children, ...props }) {
-  return <ItemImg {...props} />;
-};
-List.ItemName = function ListItemName({ children, ...props }) {
-  return <ItemName {...props}>{children}</ItemName>;
-};
-List.ItemCost = function ListItemCost({ children, ...props }) {
-  return <ItemCost {...props}>{children}</ItemCost>;
 };
