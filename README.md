@@ -23,3 +23,11 @@
 
 ## Preview
 ![preview](https://user-images.githubusercontent.com/38929712/113382480-7e7a2180-93bc-11eb-9392-719a97f46859.gif)
+
+
+
+## Get Start
+ ```
+ > npm i
+ > npm run start
+ ```
