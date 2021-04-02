@@ -2,7 +2,7 @@
 
 ## IndexPage
 - [x] Header 
-  - 숫자변경
+  - Change Cart Count
 - [x] Feacture
   - Carousel
   - pc/mobile Media Query
